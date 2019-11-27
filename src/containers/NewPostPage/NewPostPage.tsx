@@ -10,7 +10,6 @@ import {
 	CardButton,
 	CardInput,
 	CardOptions,
-	CardOptionsItem,
 	CardOptionsNote
 } from '../../components/Post/Card';
 import Spinner from '../../components/Spinner';
@@ -18,7 +17,7 @@ import Spinner from '../../components/Spinner';
 const NewPostPage = ({ error, loaded, createPost }) => {
 	const [newPost, setNewPost] = useState({});
 	const [isPostCreated, setIsPostCreated] = useState(null);
-	const [expiredTimer, setExpiredTimer] = useState(true);
+	const [expiredTimer, setExpiredTimer] = useState(false);
 	const inputTitle = useRef(null);
 	const inputBody = useRef(null);
 
@@ -36,20 +35,21 @@ const NewPostPage = ({ error, loaded, createPost }) => {
 
 	return (
 		<>
-			{!loaded && <Spinner />}
+			{expiredTimer && <Spinner />}
 			<form
 				onSubmit={async e => {
 					e.preventDefault();
 					if (!(inputTitle.current.value && inputBody.current.value)) {
 						setIsPostCreated(false);
 					} else {
+						setExpiredTimer(true);
 						await createPost(newPost);
+						setExpiredTimer(false);
 						setIsPostCreated(error || true);
 					}
 					setTimeout(() => {
-						setExpiredTimer(false);
 						setIsPostCreated(null);
-						setExpiredTimer(true);
+						setExpiredTimer(false);
 					}, 1500);
 				}}
 			>
@@ -86,20 +86,20 @@ const NewPostPage = ({ error, loaded, createPost }) => {
 									if (!(inputTitle.current.value && inputBody.current.value)) {
 										setIsPostCreated(false);
 									} else {
+										setExpiredTimer(true);
 										await createPost(newPost);
+										setExpiredTimer(false);
 										setIsPostCreated(error || true);
 									}
 									setTimeout(() => {
-										setExpiredTimer(false);
 										setIsPostCreated(null);
-										setExpiredTimer(true);
 									}, 1500);
 								}}
 							>
 								Create
 							</CardButton>
 						</CardFieldset>
-						{expiredTimer && (isPostCreated || isPostCreated === false) && (
+						{(isPostCreated || isPostCreated === false) && (
 							<CardFieldset>
 								<CardOptions>
 									{(isPostCreated && (

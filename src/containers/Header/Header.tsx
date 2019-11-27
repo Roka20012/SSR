@@ -3,8 +3,9 @@ import { connect } from 'react-redux';
 import Link from 'next/link';
 import { getPosts } from '../../actions/posts';
 import { StyledHeader, Button } from './HeaderStyles';
+import HeaderProps from './HeaderPropsInterface';
 
-const Header = ({ getPosts }) => {
+const Header = ({ getPosts }: HeaderProps) => {
 	return (
 		<StyledHeader>
 			<Link href='/'>

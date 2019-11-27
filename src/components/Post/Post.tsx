@@ -12,8 +12,9 @@ import {
 	CardOptionsNote,
 	CardButton
 } from './Card';
+import PostProps from './PostPropsInterface';
 
-const Post = ({ post, deletePost, showOpenButton }): any => {
+const Post = ({ post, deletePost, showOpenButton, loaded }: PostProps): any => {
 	const { id, title, body } = post;
 	return (
 		<CardWrapper>
@@ -37,6 +38,7 @@ const Post = ({ post, deletePost, showOpenButton }): any => {
 							<CardButton
 								type='button'
 								onClick={() => {
+									if (!loaded) return;
 									deletePost(id);
 									Router.push('/');
 								}}

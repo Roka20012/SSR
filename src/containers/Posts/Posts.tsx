@@ -14,6 +14,14 @@ const Container = styled.div`
 	width: 100%;
 `;
 
+const Error = styled.div`
+	margin: 0 auto;
+	width: 100%;
+	margin: 50px 0;
+	text-align: center;
+	font-size: 20px;
+`;
+
 const Posts = ({ deletePost, getPosts, posts, loaded, error }) => {
 	useEffect(() => {
 		if (!posts) {
@@ -21,7 +29,8 @@ const Posts = ({ deletePost, getPosts, posts, loaded, error }) => {
 		}
 	}, []);
 
-	if (error) return <div>Something went wrong please reload the page -_-</div>;
+	if (error)
+		return <Error>Something went wrong please reload the page -_-</Error>;
 	if (!loaded && !posts) return <Spinner />;
 	const showOpenButton: boolean = true;
 	return (
@@ -30,6 +39,7 @@ const Posts = ({ deletePost, getPosts, posts, loaded, error }) => {
 			{posts ? (
 				posts.map(post => (
 					<Post
+						loaded={loaded}
 						post={post}
 						deletePost={deletePost}
 						showOpenButton={showOpenButton}
@@ -37,7 +47,7 @@ const Posts = ({ deletePost, getPosts, posts, loaded, error }) => {
 					/>
 				))
 			) : (
-				<p>There is no posts!</p>
+				<Container>There is no posts!</Container>
 			)}
 		</Container>
 	);

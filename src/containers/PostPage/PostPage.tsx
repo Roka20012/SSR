@@ -1,8 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import styled from 'styled-components';
 import { connect } from 'react-redux';
 import { getPost, deletePost } from '../../actions/post';
 import Post from '../../components/Post';
 import Spinner from '../../components/Spinner';
+
+const Error = styled.div`
+	margin: 0 auto;
+	width: 100%;
+	margin: 50px 0;
+	text-align: center;
+	font-size: 20px;
+`;
 
 const PostPage = props => {
 	const { deletePost, getPost, post, loaded, error, id } = props;
@@ -12,12 +21,17 @@ const PostPage = props => {
 		}
 	}, []);
 
-	if (!loaded) return <Spinner />;
-	if (error) return <div>Something went wrong -_-</div>;
+	if (!loaded && !post) return <Spinner />;
+	if (error) return <Error>Something went wrong -_-</Error>;
 	const showOpenButton: boolean = false;
 
 	return (
-		<Post post={post} deletePost={deletePost} showOpenButton={showOpenButton} />
+		<Post
+			post={post}
+			deletePost={deletePost}
+			showOpenButton={showOpenButton}
+			loaded={loaded}
+		/>
 	);
 };
 

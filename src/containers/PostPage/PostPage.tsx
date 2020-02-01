@@ -16,7 +16,7 @@ const Error = styled.div`
 const PostPage = props => {
 	const { deletePost, getPost, post, loaded, error, id } = props;
 	useEffect(() => {
-		if (!post || post.id !== id) {
+		if (!post || post.id != id) {
 			getPost(id);
 		}
 	}, []);
@@ -36,7 +36,7 @@ const PostPage = props => {
 };
 
 const mapStateToProps = ({ posts, loaded, error, post }, { id }) => ({
-	post: posts ? posts.find(post => post.id === id) : post,
+	post: posts ? posts.find(post => post.id == id) : post,
 	loaded,
 	error
 });
